@@ -83,7 +83,9 @@ class MaskClassificationInstance(LightningModule):
             no_object_coefficient=no_object_coefficient,
         )
 
-        self.init_metrics_instance(self.network.num_blocks + 1 if self.network.masked_attn_enabled else 1)
+        self.init_metrics_instance(
+            self.network.num_blocks + 1 if self.network.masked_attn_enabled else 1
+        )
 
     def eval_step(
         self,
@@ -95,7 +97,9 @@ class MaskClassificationInstance(LightningModule):
 
         img_sizes = [img.shape[-2:] for img in imgs]
         transformed_imgs = self.resize_and_pad_imgs_instance_panoptic(imgs)
-        mask_logits_per_layer, class_logits_per_layer = self(transformed_imgs)
+        mask_logits_per_layer, class_logits_per_layer, order_logits = self(
+            transformed_imgs
+        )
 
         for i, (mask_logits, class_logits) in enumerate(
             list(zip(mask_logits_per_layer, class_logits_per_layer))
