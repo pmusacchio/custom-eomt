@@ -176,7 +176,7 @@ class LightningModule(lightning.LightningModule):
     def training_step(self, batch, batch_idx):
         imgs, targets = batch
 
-        mask_logits_per_block, class_logits_per_block = self(imgs)
+        mask_logits_per_block, class_logits_per_block, order_logits = self(imgs)
 
         losses_all_blocks = {}
         for i, (mask_logits, class_logits) in enumerate(
