@@ -93,8 +93,28 @@ class Transforms(nn.Module):
 
         return img, target
 
+    # def _filter(self, target: dict[str, Union[Tensor, TVTensor]], keep: Tensor) -> dict:
+    #     breakpoint()
+    #     return {k: wrap(v[keep], like=v) for k, v in target.items()}
+
     def _filter(self, target: dict[str, Union[Tensor, TVTensor]], keep: Tensor) -> dict:
-        return {k: wrap(v[keep], like=v) for k, v in target.items()}
+        filtered = {}
+
+        per_instance_keys = {"masks", "labels", "is_crowd", "annotation_ids"}
+        pairwise_keys = {"occlusion", "depth", "overlap", "count"}
+
+        for k, v in target.items():
+            if k in per_instance_keys:
+                filtered_v = v[keep]
+                filtered[k] = (
+                    wrap(filtered_v, like=v) if isinstance(v, TVTensor) else filtered_v
+                )
+            elif k in pairwise_keys:
+                filtered[k] = v[keep][:, keep]
+            else:
+                filtered[k] = v
+
+        return filtered
 
     def forward(
         self, img: Tensor, target: dict[str, Union[Tensor, TVTensor]]
