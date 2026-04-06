@@ -97,9 +97,7 @@ class MaskClassificationInstance(LightningModule):
 
         img_sizes = [img.shape[-2:] for img in imgs]
         transformed_imgs = self.resize_and_pad_imgs_instance_panoptic(imgs)
-        mask_logits_per_layer, class_logits_per_layer, order_logits = self(
-            transformed_imgs
-        )
+        mask_logits_per_layer, class_logits_per_layer = self(transformed_imgs)
 
         for i, (mask_logits, class_logits) in enumerate(
             list(zip(mask_logits_per_layer, class_logits_per_layer))
