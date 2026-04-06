@@ -134,7 +134,7 @@ class COCOInstance(LightningDataModule):
         is_crowd_by_id: dict[int, bool],
         width: int,
         height: int,
-        **kwargs
+        **kwargs,
     ):
         masks, labels, is_crowd = [], [], []
 
