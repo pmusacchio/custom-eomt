@@ -8,7 +8,7 @@ trainer:
   #     project: "eomt"
   #     name: "coco_instance_eomt_large_640_dinov3"
 model:
-  class_path: training.mask_classification_instance.MaskClassificationInstance
+  class_path: training.order_classification_instance.OrderClassificationInstance
   init_args:
     attn_mask_annealing_enabled: True
     attn_mask_annealing_start_steps: [14782, 29564, 44346, 59128]
@@ -28,3 +28,6 @@ model:
             backbone_name: facebook/dinov3-vitl16-pretrain-lvd1689m
 data:
   class_path: datasets.instaorder_instance.InstaOrderInstance
+  init_args:
+    include_occlusion: True
+    include_depth: True
