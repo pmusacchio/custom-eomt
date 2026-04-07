@@ -94,7 +94,6 @@ class Transforms(nn.Module):
         return img, target
 
     # def _filter(self, target: dict[str, Union[Tensor, TVTensor]], keep: Tensor) -> dict:
-    #     breakpoint()
     #     return {k: wrap(v[keep], like=v) for k, v in target.items()}
 
     def _filter(self, target: dict[str, Union[Tensor, TVTensor]], keep: Tensor) -> dict:
