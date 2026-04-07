@@ -28,7 +28,7 @@ class InstaOrderDataset(Dataset):
         transforms: Callable | None = None,
         class_mapping: dict[int, int] | None = None,
         include_occlusion: bool = True,
-        include_depth: bool = False,
+        include_depth: bool = True,
         remove_occ_bidirec: bool = False,
         remove_depth_overlap: bool = False,
         check_empty_targets: bool = True,
